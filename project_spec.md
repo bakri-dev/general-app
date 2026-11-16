@@ -4,7 +4,7 @@ Dokumen ini adalah pegangan bersama untuk siapa pun (manusia maupun AI) yang men
 
 ## 1. Ringkasan
 
-Template website modular dan general yang bisa disesuaikan untuk landing page, booking, toko online, dan pembelajaran. Proyek belajar milik [NAMA KAMU].
+Template website modular dan general yang bisa disesuaikan untuk landing page, booking, toko online, dan pembelajaran. Proyek belajar milik BAKRI DEV.
 
 ## 2. Ruang lingkup
 
@@ -103,4 +103,4 @@ Cara bekerja:
 
 ## 11. Riwayat perubahan dokumen
 
-- [TANGGAL]: dokumen dibuat.
+- 16 November 2026: dokumen dibuat.
