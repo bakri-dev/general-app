@@ -4,7 +4,7 @@ Template website yang bisa disesuaikan untuk berbagai kebutuhan: landing page, b
 
 > **Status:** tahap awal (dalam pengembangan). Saat ini baru kerangka dasar dan halaman beranda yang tersedia.
 
-**Demo:** https://USERNAME.github.io/NAMA-REPO/
+**Demo:** https://bakri-dev.github.io/general-app/
 
 ## Tujuan
 
