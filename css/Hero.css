@@ -1,0 +1,66 @@
+.hero {
+  padding: calc(var(--space) * 4) calc(var(--space) * 2);
+}
+
+.hero__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  gap: calc(var(--space) * 2);
+  align-items: center;
+}
+
+.hero__eyebrow {
+  margin: 0 0 var(--space);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.hero__title {
+  margin: 0 0 var(--space);
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  line-height: 1.15;
+}
+
+.hero__subtitle {
+  margin: 0 0 calc(var(--space) * 1.5);
+  max-width: 36rem;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.hero__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+.hero__placeholder {
+  aspect-ratio: 4 / 3;
+  border: 2px dashed rgba(127, 127, 127, 0.5);
+  border-radius: var(--radius);
+  background: rgba(127, 127, 127, 0.18);
+}
+
+/* Layout kiri: teks di kiri, gambar di kanan (di ponsel: teks dulu, gambar di bawah) */
+@media (min-width: 768px) {
+  .hero--left .hero__inner {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+
+/* Layout tengah: teks di tengah, tanpa gambar */
+.hero--center .hero__inner { text-align: center; }
+.hero--center .hero__subtitle { margin-left: auto; margin-right: auto; }
+.hero--center .hero__actions { justify-content: center; }
+.hero--center .hero__media { display: none; }
