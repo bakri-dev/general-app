@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Repo Analyzer – General App</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --secondary: #7c3aed;
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface2: #334155;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --green: #22c55e;
+      --yellow: #eab308;
+      --red: #ef4444;
+      --radius: 8px;
+      --font: system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 1.5rem 1rem;
+    }
+
+    /* Header */
+    .header {
+      max-width: 900px;
+      margin: 0 auto 1.5rem;
+    }
+    .header__top {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .header__icon { font-size: 1.75rem; }
+    .header__title { font-size: 1.4rem; font-weight: 700; }
+    .header__sub { color: var(--muted); font-size: 0.9rem; }
+
+    /* Kontrol */
+    .controls {
+      max-width: 900px;
+      margin: 0 auto 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+    }
+    .controls input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.55rem 0.9rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--surface2);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+    .controls input:focus { outline: 2px solid var(--primary); }
+    .btn {
+      padding: 0.55rem 1.1rem;
+      border-radius: var(--radius);
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn--primary { background: var(--primary); color: #fff; }
+    .btn--ghost { background: var(--surface2); color: var(--text); }
+
+    /* Status */
+    .status-bar {
+      max-width: 900px;
+      margin: 0 auto 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+    .badge {
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+    .badge--blue { background: rgba(37,99,235,0.2); color: #93c5fd; }
+    .badge--green { background: rgba(34,197,94,0.2); color: #86efac; }
+    .badge--yellow { background: rgba(234,179,8,0.2); color: #fde047; }
+    .badge--muted { background: var(--surface2); color: var(--muted); }
+
+    /* Filter tab */
+    .filter-tabs {
+      max-width: 900px;
+      margin: 0 auto 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .tab {
+      padding: 0.3rem 0.8rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--surface2);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.15s;
+    }
+    .tab.active, .tab:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* Pencarian */
+    .search-wrap {
+      max-width: 900px;
+      margin: 0 auto 1rem;
+    }
+    .search-wrap input {
+      width: 100%;
+      padding: 0.55rem 0.9rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--surface2);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+    .search-wrap input:focus { outline: 2px solid var(--primary); }
+
+    /* Hasil */
+    .results {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* Grup folder */
+    .group { background: var(--surface); border-radius: var(--radius); overflow: hidden; }
+    .group__header {
+      padding: 0.6rem 1rem;
+      background: var(--surface2);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .group__header:hover { color: var(--text); }
+    .group__count {
+      margin-left: auto;
+      background: var(--bg);
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+    }
+    .group__body { display: flex; flex-direction: column; }
+    .group__body.collapsed { display: none; }
+
+    /* Baris file */
+    .file-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 1rem;
+      border-top: 1px solid var(--surface2);
+      flex-wrap: wrap;
+    }
+    .file-row:hover { background: rgba(255,255,255,0.03); }
+    .file-icon { font-size: 1rem; flex-shrink: 0; }
+    .file-path {
+      font-family: monospace;
+      font-size: 0.88rem;
+      color: var(--text);
+      flex: 1;
+      word-break: break-all;
+    }
+    .file-ext {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      background: var(--surface2);
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .file-links {
+      display: flex;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+    .link-btn {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.15s;
+    }
+    .link-btn:hover { opacity: 0.8; }
+    .link-btn--raw { background: rgba(37,99,235,0.2); color: #93c5fd; }
+    .link-btn--live { background: rgba(34,197,94,0.2); color: #86efac; }
+    .link-btn--gh { background: rgba(124,58,237,0.2); color: #c4b5fd; }
+
+    /* Pesan */
+    .message {
+      max-width: 900px;
+      margin: 2rem auto;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .message.error { color: var(--red); }
+    .source-note {
+      max-width: 900px;
+      margin: 1rem auto 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: right;
+    }
+    .source-note span { 
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      background: var(--surface);
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header__top">
+    <span class="header__icon">🔍</span>
+    <h1 class="header__title">Repo Analyzer</h1>
+  </div>
+  <p class="header__sub">Analisis struktur file dan link repository GitHub</p>
+</div>
+
+<div class="controls">
+  <input id="inp-owner" type="text" placeholder="Username GitHub" value="bakri-dev" />
+  <input id="inp-repo" type="text" placeholder="Nama repository" value="general-app" />
+  <input id="inp-branch" type="text" placeholder="Branch" value="main" style="max-width:120px" />
+  <button class="btn btn--primary" onclick="startAnalysis()">🔍 Analisis</button>
+  <button class="btn btn--ghost" onclick="clearResults()">✕ Reset</button>
+</div>
+
+<div class="status-bar" id="status-bar" style="display:none"></div>
+<div class="filter-tabs" id="filter-tabs" style="display:none"></div>
+<div class="search-wrap" id="search-wrap" style="display:none">
+  <input type="text" id="search-input" placeholder="🔎 Cari path file..." oninput="filterFiles()" />
+</div>
+
+<div id="results" class="results"></div>
+<p class="source-note" id="source-note" style="display:none"></p>
+
+<script>
+// ───── Fallback config (dipakai kalau API gagal) ─────
+const FALLBACK_FILES = [
+  "index.html",
+  "components.html",
+  "README.md",
+  "project_spec.md",
+  "css/theme.css",
+  "css/base.css",
+  "css/backgrounds.css",
+  "css/text-colors.css",
+  "css/components.css",
+  "css/hero.css",
+  "css/card.css",
+  "css/features.css",
+  "css/cta.css",
+  "js/main.js",
+  "js/config/site.js",
+  "js/config/hero.js",
+  "js/config/features.js",
+  "js/config/cta.js",
+  "js/utils/html.js",
+  "js/components/layout.js",
+  "js/components/button.js",
+  "js/components/card.js",
+  "js/sections/hero.js",
+  "js/sections/features.js",
+  "js/sections/cta.js",
+  "js/modules/Modul",
+  "js/services/Service",
+];
+
+// ───── State ─────
+let allFiles = [];
+let currentFilter = "semua";
+let dataSource = "";
+
+// ───── Ikon per ekstensi ─────
+function iconFor(path) {
+  const ext = path.split(".").pop().toLowerCase();
+  const map = {
+    html: "🌐", css: "🎨", js: "⚙️",
+    md: "📄", json: "📋", png: "🖼️",
+    jpg: "🖼️", jpeg: "🖼️", svg: "🖼️",
+    txt: "📝", ico: "🔖",
+  };
+  return map[ext] || "📁";
+}
+
+function extOf(path) {
+  const parts = path.split(".");
+  return parts.length > 1 ? parts.pop().toLowerCase() : "—";
+}
+
+function folderOf(path) {
+  const parts = path.split("/");
+  return parts.length > 1 ? parts.slice(0, -1).join("/") : "(root)";
+}
+
+// ───── Mulai analisis ─────
+async function startAnalysis() {
+  const owner = document.getElementById("inp-owner").value.trim();
+  const repo = document.getElementById("inp-repo").value.trim();
+  const branch = document.getElementById("inp-branch").value.trim() || "main";
+
+  if (!owner || !repo) {
+    showMessage("Isi username dan nama repository dulu.", "error");
+    return;
+  }
+
+  showMessage("⏳ Mengambil data dari GitHub API...");
+  hideControls();
+
+  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`;
+  const rawBase = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}`;
+  const liveBase = `https://${owner}.github.io/${repo}`;
+  const ghBase = `https://github.com/${owner}/${repo}/blob/${branch}`;
+
+  let files = [];
+  let source = "";
+
+  try {
+    const res = await fetch(apiUrl);
+    if (!res.ok) throw new Error(`API error: ${res.status}`);
+    const data = await res.json();
+    if (data.truncated) {
+      showMessage("⚠️ Repository terlalu besar, hasil mungkin tidak lengkap.", "");
+    }
+    files = (data.tree || [])
+      .filter((f) => f.type === "blob")
+      .map((f) => f.path);
+    source = "GitHub API";
+  } catch (err) {
+    console.warn("API gagal, pakai fallback:", err);
+    files = FALLBACK_FILES;
+    source = "config fallback (API gagal atau limit habis)";
+  }
+
+  allFiles = files.map((path) => ({
+    path,
+    folder: folderOf(path),
+    ext: extOf(path),
+    rawUrl: `${rawBase}/${path}`,
+    liveUrl: `${liveBase}/${path}`,
+    ghUrl: `${ghBase}/${path}`,
+  }));
+
+  dataSource = source;
+  currentFilter = "semua";
+  renderAll();
+}
+
+// ───── Render semua ─────
+function renderAll() {
+  renderStatusBar();
+  renderFilterTabs();
+  renderResults();
+
+  document.getElementById("search-wrap").style.display = "block";
+  document.getElementById("source-note").style.display = "block";
+  document.getElementById("source-note").innerHTML =
+    `Sumber data: <span>${dataSource}</span>`;
+}
+
+// ───── Status bar ─────
+function renderStatusBar() {
+  const bar = document.getElementById("status-bar");
+  const exts = {};
+  allFiles.forEach((f) => {
+    exts[f.ext] = (exts[f.ext] || 0) + 1;
+  });
+
+  const extBadges = Object.entries(exts)
+    .sort((a, b) => b[1] - a[1])
+    .map(([e, n]) => `<span class="badge badge--muted">.${e}: ${n}</span>`)
+    .join("");
+
+  bar.innerHTML = `
+    <span class="badge badge--blue">📁 ${allFiles.length} file</span>
+    ${extBadges}
+  `;
+  bar.style.display = "flex";
+}
+
+// ───── Filter tab ─────
+function renderFilterTabs() {
+  const exts = ["semua", ...new Set(allFiles.map((f) => f.ext))].filter(Boolean);
+  const wrap = document.getElementById("filter-tabs");
+  wrap.innerHTML = exts
+    .map(
+      (e) =>
+        `<button class="tab ${e === currentFilter ? "active" : ""}"
+          onclick="setFilter('${e}')">${e === "semua" ? "Semua" : "." + e}</button>`
+    )
+    .join("");
+  wrap.style.display = "flex";
+}
+
+function setFilter(ext) {
+  currentFilter = ext;
+  document.getElementById("search-input").value = "";
+  renderFilterTabs();
+  renderResults();
+}
+
+// ───── Cari ─────
+function filterFiles() {
+  renderResults();
+}
+
+// ───── Render hasil ─────
+function renderResults() {
+  const query = (document.getElementById("search-input")?.value || "")
+    .toLowerCase().trim();
+
+  let filtered = allFiles.filter((f) => {
+    const extMatch = currentFilter === "semua" || f.ext === currentFilter;
+    const searchMatch = !query || f.path.toLowerCase().includes(query);
+    return extMatch && searchMatch;
+  });
+
+  if (filtered.length === 0) {
+    document.getElementById("results").innerHTML =
+      `<p class="message">Tidak ada file yang cocok.</p>`;
+    return;
+  }
+
+  // Kelompokkan per folder
+  const groups = {};
+  filtered.forEach((f) => {
+    if (!groups[f.folder]) groups[f.folder] = [];
+    groups[f.folder].push(f);
+  });
+
+  const html = Object.entries(groups)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([folder, files]) => renderGroup(folder, files))
+    .join("");
+
+  document.getElementById("results").innerHTML = html;
+}
+
+function renderGroup(folder, files) {
+  const rows = files
+    .map(
+      (f) => `<div class="file-row">
+        <span class="file-icon">${iconFor(f.path)}</span>
+        <span class="file-path">${f.path}</span>
+        <span class="file-ext">.${f.ext}</span>
+        <div class="file-links">
+          <a class="link-btn link-btn--raw" href="${f.rawUrl}" target="_blank">Raw</a>
+          <a class="link-btn link-btn--live" href="${f.liveUrl}" target="_blank">Live</a>
+          <a class="link-btn link-btn--gh" href="${f.ghUrl}" target="_blank">GitHub</a>
+        </div>
+      </div>`
+    )
+    .join("");
+
+  return `<div class="group">
+    <div class="group__header" onclick="toggleGroup(this)">
+      📂 ${folder}
+      <span class="group__count">${files.length}</span>
+    </div>
+    <div class="group__body">${rows}</div>
+  </div>`;
+}
+
+function toggleGroup(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle("collapsed");
+}
+
+// ───── Utilitas ─────
+function showMessage(msg, type) {
+  document.getElementById("results").innerHTML =
+    `<p class="message ${type || ""}">${msg}</p>`;
+}
+
+function hideControls() {
+  document.getElementById("status-bar").style.display = "none";
+  document.getElementById("filter-tabs").style.display = "none";
+  document.getElementById("search-wrap").style.display = "none";
+  document.getElementById("source-note").style.display = "none";
+}
+
+function clearResults() {
+  allFiles = [];
+  document.getElementById("results").innerHTML = "";
+  hideControls();
+}
+</script>
+
+</body>
+  </html>
