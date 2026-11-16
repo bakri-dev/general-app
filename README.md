@@ -40,10 +40,15 @@ Template website yang bisa disesuaikan untuk berbagai kebutuhan: landing page, b
 ├── css/
 │   ├── theme.css        # variabel desain (warna, font, spasi)
 │   └── base.css         # gaya dasar dan komponen
+│   └── components.css   # gaya untuk components
 └── js/
     ├── main.js          # titik masuk: memasang header & footer
     ├── config/
     │   └── site.js      # nama situs, menu, saklar modul
+    ├── sections/
+    ├── services/
+    ├── utils/
+    ├── modules/
     └── components/
         └── layout.js    # fungsi header dan footer
 ```
