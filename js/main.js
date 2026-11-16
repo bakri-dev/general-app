@@ -1,5 +1,23 @@
-document.getElementById("app-header").innerHTML = renderHeader();
-document.getElementById("app-hero").innerHTML = renderHero(heroConfig);
-document.getElementById("app-features").innerHTML = renderFeatures(featuresConfig);
-document.getElementById("app-cta").innerHTML = renderCta(ctaConfig);
-document.getElementById("app-footer").innerHTML = renderFooter();
+// Jalankan satu fungsi render dengan aman.
+// Kalau gagal (fungsi belum dimuat / file belum ada),
+// section itu dilewati dan sisanya tetap jalan.
+function safeRender(elementId, renderFn, config) {
+  var el = document.getElementById(elementId);
+  if (!el) return;
+  try {
+    if (typeof renderFn !== "function") {
+      el.innerHTML = "";
+      return;
+    }
+    el.innerHTML = renderFn(config);
+  } catch (err) {
+    el.innerHTML = "";
+    console.warn("Gagal render #" + elementId + ":", err);
+  }
+}
+
+safeRender("app-header", renderHeader);
+safeRender("app-hero", renderHero, heroConfig);
+safeRender("app-features", renderFeatures, featuresConfig);
+safeRender("app-cta", renderCta, ctaConfig);
+safeRender("app-footer", renderFooter);
