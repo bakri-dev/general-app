@@ -1,4 +1,4 @@
-# PROJECT_SPEC: Template Website Modular
+# PROJECT_SPEC: General App
 
 Dokumen ini adalah pegangan bersama untuk siapa pun (manusia maupun AI) yang mengerjakan proyek ini. Kalau ada permintaan yang bertentangan dengan dokumen ini, tanyakan dulu sebelum mengerjakan.
 
