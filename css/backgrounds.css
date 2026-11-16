@@ -1,0 +1,16 @@
+/* Warna polos */
+.bg-white { background: #ffffff; }
+.bg-light { background: var(--color-surface); }
+.bg-primary { background: var(--color-primary); }
+.bg-dark { background: var(--color-dark); }
+
+/* Gradien */
+.bg-gradient-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+}
+.bg-gradient-sunset {
+  background: linear-gradient(135deg, #f97316, #db2777);
+}
+.bg-gradient-dark {
+  background: linear-gradient(135deg, #111827, #1f2937 60%, #374151);
+}
