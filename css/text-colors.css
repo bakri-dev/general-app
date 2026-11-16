@@ -1,0 +1,11 @@
+/* Pakai di atas background terang */
+.text-on-light {
+  color: var(--color-text);
+  --text-muted: #4b5563;
+}
+
+/* Pakai di atas background gelap atau gradien */
+.text-on-dark {
+  color: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.82);
+}
