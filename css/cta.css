@@ -1,0 +1,38 @@
+.cta {
+  padding: calc(var(--space) * 4) calc(var(--space) * 2);
+  text-align: center;
+}
+
+.cta__inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cta__eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted, #4b5563);
+}
+
+.cta__title {
+  margin: 0 0 var(--space);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  line-height: 1.2;
+}
+
+.cta__subtitle {
+  margin: 0 auto calc(var(--space) * 2);
+  max-width: 32rem;
+  font-size: 1.05rem;
+  color: var(--text-muted, #4b5563);
+}
+
+.cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
