@@ -1,4 +1,4 @@
-# General App by Bakri Dev
+# General App
 
 Template website yang bisa disesuaikan untuk berbagai kebutuhan: landing page, booking, toko online (e-commerce), dan pembelajaran. Dibuat dengan HTML, CSS, dan JavaScript murni sebagai proyek belajar, dengan struktur yang modular supaya mudah dikembangkan.
 
@@ -70,4 +70,4 @@ Belum ditentukan.
 
 ## Pembuat
 
-Dibuat oleh [NAMA KAMU].
+Dibuat oleh BAKRI DEV.
