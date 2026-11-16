@@ -1,5 +1,5 @@
 const siteConfig = {
-  name: "Nama Situs",
+  name: "General App",
   nav: [
     { label: "Beranda", href: "index.html", enabled: true },
     { label: "Booking", href: "pages/booking.html", enabled: false },
