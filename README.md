@@ -34,6 +34,8 @@ Template website yang bisa disesuaikan untuk berbagai kebutuhan: landing page, b
 ```
 .
 ├── index.html
+├── README.md
+├── project_spec.md
 ├── css/
 │   ├── theme.css        # variabel desain (warna, font, spasi)
 │   └── base.css         # gaya dasar dan komponen
