@@ -14,4 +14,5 @@ safeRender("app-header", renderHeader);
 safeRender("app-hero", renderHero, heroConfig);
 safeRender("app-features", renderFeatures, featuresConfig);
 safeRender("app-cta", renderCta, ctaConfig);
+safeRender("app-faq", renderFaq, faqConfig);
 safeRender("app-footer", renderFooter);
